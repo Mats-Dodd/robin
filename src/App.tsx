@@ -12,7 +12,7 @@ const App = () => {
   const toggleChatPane = () => setIsChatPaneOpen(prev => !prev);
 
   return (
-    <SidebarProvider className="flex min-h-screen relative overflow-hidden">
+    <SidebarProvider className="flex min-h-screen">
       <AppSidebar />
       <main className="flex-1 p-4 overflow-y-auto">
         <div className="flex justify-between items-center mb-4 border-b pb-2 sticky top-0 bg-background z-10">
@@ -25,7 +25,7 @@ const App = () => {
         </div>
       </main>
       
-      {/* Chat Pane */}
+      {/* Chat Pane moved here, as a sibling to main */}
       <ChatPane isOpen={isChatPaneOpen} onClose={toggleChatPane} />
     </SidebarProvider>
   );
