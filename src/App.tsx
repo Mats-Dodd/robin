@@ -29,7 +29,6 @@ const App = () => {
       <main className="flex-1 p-4 overflow-y-auto">
         <div className="flex justify-between items-center mb-4 border-b pb-2 sticky top-0 bg-background z-10">
           <SidebarTrigger />
-          <h1 className="text-xl font-semibold mx-4 flex-grow">Loro Editor</h1>
           <ChatPaneTrigger onClick={toggleChatPane} />
         </div>
         <div className="content mx-auto max-w-4xl">
