@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { ChatPane } from "@/components/chat-pane";
@@ -10,6 +10,19 @@ const App = () => {
   const [isChatPaneOpen, setIsChatPaneOpen] = useState(false);
 
   const toggleChatPane = () => setIsChatPaneOpen(prev => !prev);
+
+  // Add keyboard shortcut for toggling the chat pane with Cmd+I (Meta+I)
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'i' && (event.metaKey || event.ctrlKey)) {
+        event.preventDefault();
+        toggleChatPane();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [toggleChatPane]);
 
   return (
     <SidebarProvider className="flex min-h-screen">
