@@ -9,6 +9,7 @@ import {
   ChatBubbleTimestamp,
 } from '@/components/ui/chat/chat-bubble';
 import { cn } from '@/lib/utils';
+import { useAIChat } from '@/hooks/useAIChat';
 
 interface ChatPaneProps {
   isOpen: boolean;
@@ -23,7 +24,7 @@ interface Message {
 }
 
 export function ChatPane({ isOpen, onClose }: ChatPaneProps) {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const { messages, sendMessage, isLoading } = useAIChat();
   const [inputValue, setInputValue] = useState('');
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [width, setWidth] = useState(320); // Initial width (equivalent to w-80)
@@ -72,34 +73,9 @@ export function ChatPane({ isOpen, onClose }: ChatPaneProps) {
     const text = inputValue.trim();
     if (!text) return;
 
-    const timestamp = new Date().toLocaleTimeString([], { 
-      hour: '2-digit', 
-      minute: '2-digit' 
-    });
-
-    const sentMessage: Message = {
-      id: `${Date.now()}-sent`,
-      role: 'sent',
-      content: text,
-      timestamp,
-    };
-    
-    setMessages((prev) => [...prev, sentMessage]);
+    // Send the message using our AI chat hook
+    sendMessage(text);
     setInputValue('');
-
-    // Echo back after a delay
-    setTimeout(() => {
-      const receivedMessage: Message = {
-        id: `${Date.now()}-received`,
-        role: 'received',
-        content: `You wrote: "${text}"`, // Simple echo logic
-        timestamp: new Date().toLocaleTimeString([], { 
-          hour: '2-digit', 
-          minute: '2-digit' 
-        }),
-      };
-      setMessages((prev) => [...prev, receivedMessage]);
-    }, 600); // Simulate response delay
   };
 
   // Base classes for the pane - removing fixed positioning and transforms
@@ -128,7 +104,7 @@ export function ChatPane({ isOpen, onClose }: ChatPaneProps) {
 
       {/* Header */}
       <div className="flex justify-between items-center px-4 pt-4 pb-2 border-b">
-        <h2 className="text-lg font-semibold text-card-foreground">Chat</h2>
+        <h2 className="text-lg font-semibold text-card-foreground">AI Chat</h2>
         <Button variant="ghost" size="icon" onClick={onClose} aria-label="Close Chat Pane">
           <X className="h-5 w-5" />
         </Button>
@@ -155,7 +131,8 @@ export function ChatPane({ isOpen, onClose }: ChatPaneProps) {
             ref={inputRef}
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
-            placeholder="Send a message..."
+            placeholder={isLoading ? "AI is thinking..." : "Send a message..."}
+            disabled={isLoading}
             onKeyDown={(e) => {
               if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
