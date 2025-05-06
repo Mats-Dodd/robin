@@ -8,8 +8,8 @@ const App = () => {
     <SidebarProvider className="flex min-h-screen">
       <AppSidebar />
       <main className="flex-1 p-4">
-        <SidebarTrigger />
-        <div className="content">
+        <SidebarTrigger  />
+        <div className="content mx-auto max-w-4xl">
           <Editor />
         </div>
       </main>
