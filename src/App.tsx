@@ -11,7 +11,6 @@ const App = () => {
 
   const toggleChatPane = () => setIsChatPaneOpen(prev => !prev);
 
-  // Add keyboard shortcut for toggling the chat pane with Cmd+I (Meta+I)
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'i' && (event.metaKey || event.ctrlKey)) {
@@ -38,7 +37,6 @@ const App = () => {
         </div>
       </main>
       
-      {/* Chat Pane moved here, as a sibling to main */}
       <ChatPane isOpen={isChatPaneOpen} onClose={toggleChatPane} />
     </SidebarProvider>
   );
