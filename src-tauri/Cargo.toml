@@ -1,5 +1,5 @@
 [package]
-name = "loro"
+name = "pqp"
 version = "0.1.0"
 description = "A Tauri App"
 authors = ["you"]
@@ -11,15 +11,32 @@ edition = "2021"
 # The `_lib` suffix may seem redundant but it is necessary
 # to make the lib name unique and wouldn't conflict with the bin name.
 # This seems to be only an issue on Windows, see https://github.com/rust-lang/cargo/issues/8519
-name = "loro_lib"
+name = "pqp_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]
-tauri-build = { version = "2", features = [] }
+tauri-build = { version = "2.1.1", features = [] }
 
 [dependencies]
-tauri = { version = "2", features = [] }
-tauri-plugin-opener = "2"
+tauri = { version = "2.0.0-rc.10", features = [] }
+tauri-plugin-opener = "2.2.6"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
+tauri-plugin-shell = "2.2.1"
+rmcp = {version = "0.1.5", features = [
+    "client",
+    "transport-sse",
+    "transport-child-process",
+    "tower"
+] }
+tokio = "1.44.2"
+tauri-plugin-http = "2"
+futures-util = "0.3.31"
+dotenv = "0.15.0"
+log = "0.4.27"
+thiserror = "2.0.12"
+async-trait = "0.1.88"
+env_logger = "0.10.2"
+tauri-plugin-sql = { version = "2", features = ["sqlite"] }
+dirs = "6.0.0"
 
