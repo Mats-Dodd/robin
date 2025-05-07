@@ -66,6 +66,8 @@ export async function customTauriFetch(
           if (event.payload) {
             try {
               // Parse the Anthropic format: "0:{JSON}\n"
+
+              
               const chunkStr = String(event.payload);
               console.log(`Raw chunk data:`, chunkStr);
               
